@@ -1,6 +1,7 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5733,100:1D2671&height=300&section=header&text=Gyu-BBB&fontSize=90&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Welcome%20to%20my%20GitHub%20Profile&descAlignY=51&descAlign=62" alt="header"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5733,100:1D2671&height=300&section=header&text=Gyu-BBB&fontSize=90&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Welcome%20to%20my%20GitHub&descAlignY=51&descAlign=62" alt="header"/>
 </div>
+
 
 ## 👨‍💻 About Me
 
