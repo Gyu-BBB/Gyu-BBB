@@ -63,6 +63,31 @@ ResNet과 멀티헤드 어텐션을 결합하여 FFT로 변환된 주파수 도�
   [프로젝트 영상 보기](https://youtu.be/2ttVYWnjhjA?si=iHFikeSadcDW3UiI)
 - **생성형 AI 그림, 영상 프로젝트 참여**: 생성형 AI 기술을 활용하여 그림과 영상을 제작하는 프로젝트에 참여 2022.06. ~ 2023.12.
 - **페르소나 AI 휴먼 제작**: 다양한 산업에서 사람과 유사한 상호작용을 제공하는 AI 시스템을 개발. ChatGPT-4 기반의 대화형 인공지능, 실시간 음성 합성, 실시간 표정 변화를 통해 교육 및 상업적 환경에서 자연스럽고 개인화된 상호작용을 구현.
+-  **Plan Generator Rule‑Based Hybrid System**: 멀티모달 입력(텍스트·이미지·비디오)을 자동 분석 → 계획 수립 → 토큰화 → 실행까지 풀스택으로 처리하는 에이전트 기반 플랫폼. 사용자는 자연어·파일만 입력하면 시스템이 LLM 기반 플래너(Llama‑3, Deepseek‑Coder)가 작성한 JSON Plan Token을 따라 다양한 Task Agent(Llava, Cosmos predict1/transfer1 등)를 호출, 실시간 WebSocket으로 진행 상황을 반환하고 최종 비디오·이미지·텍스트 결과를 제공한다.
+  ```
+주요 역할
+
+시스템 설계: A2A 프레임워크 + MCP 프로토콜 기반 4‑단계 파이프라인 설계 (플래닝 → 토큰화 → 라우팅 → 실행)                 
+Backend: Django·Channels WebSocket, Celery+Redis 비동기 큐, gRPC 서버 작성                            
+Manager Agent: Session Manager, Abstract Plan Generator(Llama‑3), Plan Token Generator(Deepseek) 구현 
+DevOps:  Docker‑Compose GPU 오케스트레이션, NVML‑기반 GPU 슬롯 세마포어, GitHub Actions CI/CD                
+성능 최적화: H100×2 환경 기준 End‑to‑End 75 ± 5 s 달성, Plan Token 재시도·캐싱 로직 적용                         
+
+기술 스택
+
+AI/LLM: Llama‑3‑7B‑Instruct, Deepseek‑Coder‑Instruct, Llava‑1.5‑13B
+비디오 생성: NVIDIA Cosmos predict1 / transfer1
+서버: Django 4, FastAPI, gRPC, Celery 5, Redis 7
+컨테이너: Docker 24, Docker‑Compose, NVIDIA Container Runtime
+배포/CI: GitHub Actions, OpenTelemetry + Jaeger 트레이싱
+
+핵심 성과
+
+Agent Hot‑Plug : agent_caps.md 한 줄 추가로 신규 모델 실시간 편입.
+E2E < 75 s : H100×2 기준 멀티모달 비디오 파이프라인 평균 처리 시간 달성.
+WebSocket 실시간 피드 : 작업 진행률·중간 산출물을 Django Channels로 스트리밍.
+Fail‑Fast & Retry : Plan Token JSON 검증 → temperature 단계적 재시도 및 gRPC deadline 기반 롤백.
+```
 
 ---
 
